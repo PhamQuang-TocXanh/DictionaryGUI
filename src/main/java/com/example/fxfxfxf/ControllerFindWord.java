@@ -31,11 +31,11 @@ import static com.example.fxfxfxf.cmdDictionary.DictionaryManagement.BinarySearc
 
 public class ControllerFindWord implements Initializable {
     @FXML
-    Label wordMeaning;
-    @FXML
     TextField wordSearch;
     @FXML
     private ListView<String> listView;
+    @FXML
+    TextArea meaning;
 
     private Stage stage;
     private Scene view_scene;
@@ -67,7 +67,8 @@ public class ControllerFindWord implements Initializable {
        // String word_explain = index != -1 ? listWord.get(index).getWord_explain() : "";
         String word_explain = dictDB.findWord(word_target);
         System.out.println(word_explain);
-        wordMeaning.setText((word_explain.equals("") ? "" : word_explain));
+        meaning.setText((word_explain.equals("") ? "" : word_explain));
+        meaning.setWrapText(true);
     }
 
     @Override
@@ -77,21 +78,12 @@ public class ControllerFindWord implements Initializable {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode()== KeyCode.ENTER) {
                     displayWordExplain();
-
                 }
             }
         });
         wordInlistView = new ArrayList<>();
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        listView.setPrefHeight(190);
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {//hinh nhu o day cung co loi
-                wordSearch.setText(listView.getSelectionModel().getSelectedItem());
-                System.out.println(wordSearch.getText());
-                updateListView();
-            }
-        });
+        listView.setPrefHeight(0);
     }
 
     public void updateListView() {//van dang loi
@@ -100,6 +92,7 @@ public class ControllerFindWord implements Initializable {
             if (wordSearch.getText() != null) {
                 wordOnTyping = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
             } else {
+                listView.setPrefHeight(0);
                 return;
             }
             if (listView.getItems().size() > 0) {
@@ -129,6 +122,14 @@ public class ControllerFindWord implements Initializable {
             } else {
                 listView.setPrefHeight(0);
             }
+
+            listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    wordSearch.setText(listView.getSelectionModel().getSelectedItem());
+                    displayWordExplain();
+                }
+            });
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
