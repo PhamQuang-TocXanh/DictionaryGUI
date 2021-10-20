@@ -14,6 +14,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -43,7 +44,7 @@ public class ControllerFindWord implements Initializable {
     private final Dictionary dictionary = Main.dictionary;
     private List<Word> listWord = dictionary.getWords();
     private List<String> wordInlistView;
-
+    private DictDatabase dictDB = Main.dictDB;
     public void switchToListWord(ActionEvent e) throws IOException {
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("listWord-view.fxml")));
@@ -62,8 +63,10 @@ public class ControllerFindWord implements Initializable {
     public void displayWordExplain() {
         if (wordSearch.getText() == null) return;
         String word_target = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
-        int index = DictionaryManagement.dictionaryLookup(dictionary, word_target);
-        String word_explain = index != -1 ? listWord.get(index).getWord_explain() : "";
+        //int index = DictionaryManagement.dictionaryLookup(dictionary, word_target);
+       // String word_explain = index != -1 ? listWord.get(index).getWord_explain() : "";
+        String word_explain = dictDB.findWord(word_target);
+        System.out.println(word_explain);
         wordMeaning.setText((word_explain.equals("") ? "" : word_explain));
     }
 
@@ -72,8 +75,9 @@ public class ControllerFindWord implements Initializable {
         wordSearch.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case ENTER -> displayWordExplain();
+                if (keyEvent.getCode()== KeyCode.ENTER) {
+                    displayWordExplain();
+
                 }
             }
         });
@@ -254,8 +258,8 @@ public class ControllerFindWord implements Initializable {
             deleteWord.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    switch (keyEvent.getCode()) {
-                        case ENTER -> {
+                    if (keyEvent.getCode()==KeyCode.ENTER) {
+
                             if (deleteWord.getText() == null) return;
                             String eng = deleteWord.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
                             if (eng.equals("")) {
@@ -269,7 +273,7 @@ public class ControllerFindWord implements Initializable {
                             } else {
                                 check.setText("Can not find word!");
                             }
-                        }
+
 
                     }
                 }

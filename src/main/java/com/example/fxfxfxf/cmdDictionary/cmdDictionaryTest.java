@@ -26,14 +26,22 @@ public class cmdDictionaryTest {
             System.out.print("Lựa chọn của bạn: ");
             check = sc.nextInt();
             switch (check) {
-                case 1 -> DictionaryManagement.dictionarySearcher(dictionary); // tim tu tuong doi
-                case 2 -> DictionaryManagement.dictionaryLookup(dictionary); // tra tu tuyet doi
-                case 3 -> DictionaryManagement.insertFromCommandLine(dictionary);
-                case 4 -> DictionaryManagement.editWord(dictionary);
-                case 5 -> DictionaryManagement.deleteWord(dictionary);
-                case 6 -> DictionaryCommandline.showAllWords(dictionary);
-                case 7 -> System.out.println("Bai Bai");
-                default -> System.out.println("Nhập sai!!!");
+                case 1 : DictionaryManagement.dictionarySearcher(dictionary); // tim tu tuong doi
+                    break;
+                case 2 : DictionaryManagement.dictionaryLookup(dictionary); // tra tu tuyet doi
+                    break;
+                case 3 : DictionaryManagement.insertFromCommandLine(dictionary);
+                break;
+                case 4 : DictionaryManagement.editWord(dictionary);
+                break;
+                case 5 : DictionaryManagement.deleteWord(dictionary);
+                break;
+                case 6 : DictionaryCommandline.showAllWords(dictionary);
+                break;
+                case 7 : System.out.println("Bai Bai");
+                break;
+                default : System.out.println("Nhập sai!!!");
+                break;
             }
         }
         while(check != 7);

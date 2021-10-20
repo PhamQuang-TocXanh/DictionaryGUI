@@ -16,10 +16,11 @@ import java.io.IOException;
 
 public class Main extends Application {
     public static Dictionary dictionary;
-
+    public static DictDatabase dictDB;
     @Override
     public void start(Stage stage) throws IOException {
         dictionary = new Dictionary();
+        dictDB = new DictDatabase();
         DictionaryManagement.insertFromFile(dictionary);
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("findWord-view.fxml"));
