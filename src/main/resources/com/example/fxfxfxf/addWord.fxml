@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="325.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fxfxfxf.ControllerAddWord">
+   <children>
+      <Label layoutX="64.0" layoutY="14.0" text="Add New Word" textFill="#4da4f8">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <TextField fx:id="newWord" layoutX="21.0" layoutY="77.0" onMouseClicked="#reset" prefHeight="31.0" prefWidth="174.0" promptText="new word" />
+      <TextField fx:id="pronunciation" layoutX="21.0" layoutY="121.0" onMouseClicked="#reset" prefHeight="31.0" prefWidth="174.0" promptText="pronunciation" />
+      <Button fx:id="add" layoutX="237.0" layoutY="77.0" mnemonicParsing="false" style="-fx-background-color: #4da4f8;" text="Add">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <TextArea fx:id="meaning" layoutX="21.0" layoutY="164.0" onMouseClicked="#reset" prefHeight="122.0" prefWidth="174.0" promptText="meaning" />
+      <Label layoutX="213.0" layoutY="163.0" text="STATUS:">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutX="205.0" layoutY="203.0" prefHeight="97.0" prefWidth="140.0" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

@@ -136,86 +136,98 @@ public class ControllerFindWord implements Initializable {
     }
 
     public void addWord() {
+//        try {
+//            stage = new Stage();
+//            stage.setTitle("Add word to your dictionary");
+//
+//            AnchorPane root = new AnchorPane();
+//            view_scene = new Scene(root,300,250, Color.WHITESMOKE);
+//
+//            Label header = new Label("Add word");
+//            header.setLayoutX(100);
+//            header.setLayoutY(8);
+//            header.setTextAlignment(TextAlignment.CENTER);
+//            header.setFont(new Font("Roboto", 25));
+//            root.getChildren().add(header);
+//
+//            TextField newWord = new TextField();
+//            newWord.setPromptText("new word");
+//            newWord.setLayoutX(80);
+//            newWord.setLayoutY(60);
+//            root.getChildren().add(newWord);
+//
+//            TextField newWordMeaning = new TextField();
+//            newWordMeaning.setPromptText("meaning");
+//            newWordMeaning.setLayoutX(80);
+//            newWordMeaning.setLayoutY(100);
+//            root.getChildren().add(newWordMeaning);
+//
+//            Button button = new Button("Add");
+//            button.setLayoutX(130);
+//            button.setLayoutY(140);
+//            button.setStyle("-fx-background-color: #4da4f8; ");
+//            button.setTextFill(Color.WHITESMOKE);
+//            root.getChildren().add(button);
+//
+//            Label check = new Label("");//chua chỉnh vị trí
+//            check.setPrefHeight(25); check.setMaxHeight(50);
+//            check.setLayoutX(0);
+//            check.setLayoutY(200);
+//            check.setFont(new Font("Roboto", 20));
+//            check.setTextFill(Color.web("#f2f2f2"));
+//            check.setStyle("-fx-background-color: #4da4fa; ");
+//            root.getChildren().add(check);
+//
+//            button.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent actionEvent) {
+//                    if (newWord.getText() == null) return;
+//                    String eng = newWord.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
+//                    if (eng.equals("")) {
+//                        return;
+//                    }
+//
+//                    int index = DictionaryManagement.dictionaryLookup(dictionary, eng);
+//                    if (index != -1) {
+//                        check.setText(eng + " already in the dictionary!");
+//                    } else {
+//                        if (newWordMeaning.getText() == null) return;
+//                        String viet = newWordMeaning.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
+//                        if (viet.equals("")) {
+//                            check.setText("Meaning required!");
+//                            return;
+//                        }
+//                        Word word = new Word(eng, viet);
+//                        dictionary.getWords().add(word);
+//                        dictionary.getWords().sort(new Comparator<Word>() {
+//                            @Override
+//                            public int compare(Word o1, Word o2) {
+//                                return o1.getWord_target().compareTo(o2.getWord_target());
+//                            }
+//                        });
+//                        check.setText("Add succesfully!!!");
+//                    }
+//                }
+//            });
+//
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.setScene(view_scene);
+//            stage.setResizable(false);
+//            stage.showAndWait();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
         try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addWord.fxml")));
+            view_scene = new Scene(root);
             stage = new Stage();
-            stage.setTitle("Add word to your dictionary");
-
-            AnchorPane root = new AnchorPane();
-            view_scene = new Scene(root,300,250, Color.WHITESMOKE);
-
-            Label header = new Label("Add word");
-            header.setLayoutX(100);
-            header.setLayoutY(8);
-            header.setTextAlignment(TextAlignment.CENTER);
-            header.setFont(new Font("Roboto", 25));
-            root.getChildren().add(header);
-
-            TextField newWord = new TextField();
-            newWord.setPromptText("new word");
-            newWord.setLayoutX(80);
-            newWord.setLayoutY(60);
-            root.getChildren().add(newWord);
-
-            TextField newWordMeaning = new TextField();
-            newWordMeaning.setPromptText("meaning");
-            newWordMeaning.setLayoutX(80);
-            newWordMeaning.setLayoutY(100);
-            root.getChildren().add(newWordMeaning);
-
-            Button button = new Button("Add");
-            button.setLayoutX(130);
-            button.setLayoutY(140);
-            button.setStyle("-fx-background-color: #4da4f8; ");
-            button.setTextFill(Color.WHITESMOKE);
-            root.getChildren().add(button);
-
-            Label check = new Label("");//chua chỉnh vị trí
-            check.setPrefHeight(25); check.setMaxHeight(50);
-            check.setLayoutX(0);
-            check.setLayoutY(200);
-            check.setFont(new Font("Roboto", 20));
-            check.setTextFill(Color.web("#f2f2f2"));
-            check.setStyle("-fx-background-color: #4da4fa; ");
-            root.getChildren().add(check);
-
-            button.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (newWord.getText() == null) return;
-                    String eng = newWord.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
-                    if (eng.equals("")) {
-                        return;
-                    }
-
-                    int index = DictionaryManagement.dictionaryLookup(dictionary, eng);
-                    if (index != -1) {
-                        check.setText(eng + " already in the dictionary!");
-                    } else {
-                        if (newWordMeaning.getText() == null) return;
-                        String viet = newWordMeaning.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
-                        if (viet.equals("")) {
-                            check.setText("Meaning required!");
-                            return;
-                        }
-                        Word word = new Word(eng, viet);
-                        dictionary.getWords().add(word);
-                        dictionary.getWords().sort(new Comparator<Word>() {
-                            @Override
-                            public int compare(Word o1, Word o2) {
-                                return o1.getWord_target().compareTo(o2.getWord_target());
-                            }
-                        });
-                        check.setText("Add succesfully!!!");
-                    }
-                }
-            });
-
-            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add word");
             stage.setScene(view_scene);
             stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
