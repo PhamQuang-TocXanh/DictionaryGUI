@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="354.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fxfxfxf.ControllerAPITranslate">
+   <children>
+      <TextArea fx:id="dstText" editable="false" layoutX="316.0" layoutY="101.0" prefHeight="260.0" prefWidth="223.0" promptText="Translatation" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font></TextArea>
+      <Button fx:id="backBtn" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToFindWord" text="BACK" />
+      <Label fx:id="header" alignment="CENTER" contentDisplay="CENTER" layoutY="42.0" prefHeight="45.0" prefWidth="553.0" style="-fx-background-color: rgb(102, 163, 255);" text="Google API Translate" textFill="WHITE">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="39.0" fitWidth="46.0" layoutX="486.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/kinhlup_sach.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="43.0" fitWidth="33.0" layoutX="37.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/dictionary_icon.png" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="srcText" layoutX="8.0" layoutY="101.0" prefHeight="260.0" prefWidth="223.0" promptText="Enter text to translate" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font></TextArea>
+      <Button fx:id="enToVi" layoutX="243.0" layoutY="163.0" mnemonicParsing="false" onAction="#translateEnToVi" text="EnToVi" />
+      <Button fx:id="viToEn" layoutX="243.0" layoutY="228.0" mnemonicParsing="false" onAction="#translateViToEn" text="ViToEn" />
+   </children>
+</AnchorPane>

@@ -37,6 +37,7 @@ public class ControllerAddWord implements Initializable {
             String newWord_input = newWord.getText().toLowerCase(Locale.ROOT).trim().replaceAll("\\s+", " ");
             String pronunciation_input = pronunciation.getText().toLowerCase(Locale.ROOT).trim().replaceAll("\\s+", " ");
             String meaning_input = meaning.getText().toLowerCase(Locale.ROOT).trim().replaceAll("\\s+", " ");
+            /*
             int index = DictionaryManagement.dictionaryLookup(dictionary, newWord_input);
             if (index != -1) {
                 status.setTextFill(Color.RED);
@@ -48,7 +49,16 @@ public class ControllerAddWord implements Initializable {
                 status.setTextFill(Color.web("00FF80")); // green
                 status.setText("Add succesfully!!!");
             }
-
+            */
+            if (dictDB.isInDictionary(newWord_input)) {
+                status.setTextFill(Color.RED);
+                status.setText(newWord_input + " is already in the dictionary!");
+            }
+            else {
+                dictDB.addWord(newWord_input, pronunciation_input, meaning_input);
+                status.setTextFill(Color.web("00FF80")); // green
+                status.setText("Add succesfully!!!");
+            }
             status.setWrapText(true);
             status.setTextAlignment(TextAlignment.CENTER);
             status.setVisible(true);

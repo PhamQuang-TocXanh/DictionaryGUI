@@ -1,12 +1,15 @@
 package com.example.fxfxfxf;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DictDatabase {
     /**
      * SQL connection.
      * @return
      */
+
     private Connection connect() {
         String url = "jdbc:sqlite:evdict.db";
         Connection conn = null;
@@ -48,26 +51,25 @@ public class DictDatabase {
     public String findWord(String keyWord){
 
         //sql select syntax
-        String sqlSearch = "SELECT * FROM evdict WHERE word = ?";
+        String sql = "SELECT * FROM evdict WHERE word = ?";
 
         try {
             Connection conn = this.connect();
 
-            PreparedStatement ps  = conn.prepareStatement(sqlSearch);
+            PreparedStatement pstmt  = conn.prepareStatement(sql);
 
-            ps.setString(1,keyWord );
+            pstmt.setString(1,keyWord );
 
-            ResultSet rs    = ps.executeQuery();
-           // StringBuilder result = new StringBuilder();
+            ResultSet rs    = pstmt.executeQuery();
+            StringBuilder result = new StringBuilder();
 
-            String result = "";
             while (rs.next()) {
 
-                result += rs.getString("word") +  "\r\n\t" + rs.getString("pronunciation")
-                        + "\r\n\t" + rs.getString("meaning") + "\t";
+                result.append(rs.getString("word") +  "\r\n\t" + rs.getString("pronunciation")
+                        + "\r\n\t" + rs.getString("meaning") + "\t");
 
             }
-            return result;
+            return result.toString();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -115,5 +117,42 @@ public class DictDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     *
+     */
+    boolean isInDictionary(String word) {
+        return findWord(word) != "";
+    }
+
+
+    /**
+     *  Dictionary Searcher.
+     * @param word
+     * @return
+     */
+    public List<String> dictionarySearcher(String word) {
+        //sql select syntax
+        String sql = "SELECT * FROM evdict WHERE word LIKE ? ORDER BY word ASC";
+        List<String> listwords = new ArrayList<String>();
+        try {
+            Connection conn = this.connect();
+
+            PreparedStatement ps  = conn.prepareStatement(sql);
+
+            ps.setString(1,word + "%");
+
+            ResultSet rs    = ps.executeQuery();
+
+            while (rs.next()) {
+
+                listwords.add(rs.getString("word"));
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listwords;
     }
 }

@@ -3,6 +3,7 @@ package com.example.fxfxfxf;
 import com.example.fxfxfxf.cmdDictionary.*;
 
 import com.example.fxfxfxf.cmdDictionary.Dictionary;
+import com.example.fxfxfxf.module.TextToSpeech;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -45,12 +46,29 @@ public class ControllerFindWord implements Initializable {
     private List<Word> listWord = dictionary.getWords();
     private List<String> wordInlistView;
     private DictDatabase dictDB = Main.dictDB;
+    /*
     public void switchToListWord(ActionEvent e) throws IOException {
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("listWord-view.fxml")));
             view_scene = new Scene(root);
             stage = new Stage();
             stage.setTitle("All word in dictionary");
+            stage.setScene(view_scene);
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+    */
+
+    public void switchToAPITranslate(ActionEvent e) throws IOException {
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("APITranslate-view.fxml")));
+            view_scene = new Scene(root);
+            stage = new Stage();
+            stage.setTitle("Google API Translate");
             stage.setScene(view_scene);
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -98,6 +116,10 @@ public class ControllerFindWord implements Initializable {
             if (listView.getItems().size() > 0) {
                 listView.getItems().subList(0, listView.getItems().size()).clear();
             }
+            listView.getItems().addAll(dictDB.dictionarySearcher(wordSearch.getText()));
+            listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
+
+            /*
             wordInlistView.clear();
             int n = listWord.size();
 
@@ -122,7 +144,7 @@ public class ControllerFindWord implements Initializable {
             } else {
                 listView.setPrefHeight(0);
             }
-
+            */
             listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -320,4 +342,7 @@ public class ControllerFindWord implements Initializable {
         }
     }
 
+    public void textToSpeech() {
+        TextToSpeech.textToSpeech(wordSearch.getText());
+    }
 }
