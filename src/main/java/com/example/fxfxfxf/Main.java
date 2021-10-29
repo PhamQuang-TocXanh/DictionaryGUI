@@ -53,7 +53,7 @@ public class Main extends Application {
     public void logout(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Closing!!!");
-        alert.setHeaderText("Are your sure want to quit?");
+        alert.setHeaderText("Are you sure want to quit?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             stage.close();

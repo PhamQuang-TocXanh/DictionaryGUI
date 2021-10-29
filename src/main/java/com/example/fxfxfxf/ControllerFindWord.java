@@ -37,6 +37,13 @@ public class ControllerFindWord implements Initializable {
     private ListView<String> listView;
     @FXML
     TextArea meaning;
+    @FXML
+    Button editButton;
+    @FXML
+    Button deleteButton;
+
+    public static String wordNow;// may need to change
+
 
     private Stage stage;
     private Scene view_scene;
@@ -46,22 +53,6 @@ public class ControllerFindWord implements Initializable {
     private List<Word> listWord = dictionary.getWords();
     private List<String> wordInlistView;
     private DictDatabase dictDB = Main.dictDB;
-    /*
-    public void switchToListWord(ActionEvent e) throws IOException {
-        try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("listWord-view.fxml")));
-            view_scene = new Scene(root);
-            stage = new Stage();
-            stage.setTitle("All word in dictionary");
-            stage.setScene(view_scene);
-            stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-        }
-    }
-    */
 
     public void switchToAPITranslate(ActionEvent e) throws IOException {
         try {
@@ -81,8 +72,6 @@ public class ControllerFindWord implements Initializable {
     public void displayWordExplain() {
         if (wordSearch.getText() == null) return;
         String word_target = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
-        //int index = DictionaryManagement.dictionaryLookup(dictionary, word_target);
-       // String word_explain = index != -1 ? listWord.get(index).getWord_explain() : "";
         String word_explain = dictDB.findWord(word_target);
         System.out.println(word_explain);
         meaning.setText((word_explain.equals("") ? "" : word_explain));
@@ -149,6 +138,7 @@ public class ControllerFindWord implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                     wordSearch.setText(listView.getSelectionModel().getSelectedItem());
+
                     displayWordExplain();
                 }
             });
@@ -252,7 +242,7 @@ public class ControllerFindWord implements Initializable {
             System.out.println(exception.getMessage());
         }
     }
-
+    /*
     public void deleteWord() {
         try {
             stage = new Stage();
@@ -341,8 +331,55 @@ public class ControllerFindWord implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+    */
+
+    public void deleteWord() {
+        if (!dictDB.isInDictionary(wordSearch.getText())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Word is not exist!");
+            alert.setTitle("Error");
+            alert.showAndWait();
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting word");
+        alert.setHeaderText("Are you sure want to delete this word?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            dictDB.deleteWord(wordSearch.getText());
+            wordSearch.setText("");
+            meaning.setText("");
+        }
+    }
+
+    public void editWord(ActionEvent e) { // need change (maybe)
+        System.out.println("edit");
+        if (!dictDB.isInDictionary(wordSearch.getText())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Word is not exist!");
+            alert.setTitle("Error");
+            alert.showAndWait();
+            return;
+        }
+        wordNow = wordSearch.getText();
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("editWord.fxml")));
+            view_scene = new Scene(root);
+            stage = new Stage();
+            stage.setTitle("Edit word");
+            stage.setScene(view_scene);
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            meaning.setText(dictDB.findWord(wordNow));
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
 
     public void textToSpeech() {
         TextToSpeech.textToSpeech(wordSearch.getText());
     }
+
 }

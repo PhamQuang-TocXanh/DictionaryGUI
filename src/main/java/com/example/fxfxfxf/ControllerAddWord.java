@@ -53,6 +53,12 @@ public class ControllerAddWord implements Initializable {
             if (dictDB.isInDictionary(newWord_input)) {
                 status.setTextFill(Color.RED);
                 status.setText(newWord_input + " is already in the dictionary!");
+            } else if (pronunciation_input == "") {
+                status.setTextFill(Color.RED);
+                status.setText("Invalid pronunciation");
+            } else if (meaning_input == "") {
+                status.setTextFill(Color.RED);
+                status.setText("Invalid meaning");
             }
             else {
                 dictDB.addWord(newWord_input, pronunciation_input, meaning_input);

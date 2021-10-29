@@ -16,7 +16,7 @@
       </Label>
       <TextField fx:id="newWord" layoutX="21.0" layoutY="77.0" onMouseClicked="#reset" prefHeight="31.0" prefWidth="174.0" promptText="new word" />
       <TextField fx:id="pronunciation" layoutX="21.0" layoutY="121.0" onMouseClicked="#reset" prefHeight="31.0" prefWidth="174.0" promptText="pronunciation" />
-      <Button fx:id="add" layoutX="237.0" layoutY="77.0" mnemonicParsing="false" style="-fx-background-color: #4da4f8;" text="Add">
+      <Button fx:id="add" layoutX="237.0" layoutY="77.0" mnemonicParsing="false" style="-fx-background-color: #4da4f8;" text="Add" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>

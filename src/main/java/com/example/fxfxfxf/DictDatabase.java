@@ -102,17 +102,17 @@ public class DictDatabase {
      * @param word
      * @param newMeaning
      */
-    public void editWord(String word, String newMeaning) {
+    public void editWord(String word, String newPronunciation,String newMeaning) {
         // sql update syntax
-        String sql = "UPDATE evdict SET meaning = ? WHERE word = ?";
+        String sql = "UPDATE evdict SET pronunciation = ? , meaning = ? WHERE word = ?";
         try {
             Connection conn = this.connect();
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, newMeaning);
-            pstmt.setString(2, word);
-
+            pstmt.setString(1, newPronunciation);
+            pstmt.setString(2, newMeaning);
+            pstmt.setString(3, word);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
