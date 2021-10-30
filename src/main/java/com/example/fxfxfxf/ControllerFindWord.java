@@ -41,6 +41,12 @@ public class ControllerFindWord implements Initializable {
     Button editButton;
     @FXML
     Button deleteButton;
+    @FXML
+    private Button apiTranslate;
+    @FXML
+    private Button addNewWord;
+    @FXML
+    private Button aboutUs;
 
     public static String wordNow;// may need to change
 
@@ -90,22 +96,40 @@ public class ControllerFindWord implements Initializable {
         });
         wordInlistView = new ArrayList<>();
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        listView.setPrefHeight(0);
+        listView.getItems().addAll(dictDB.dictionarySearcher(""));
+        listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
+        buttonHoverEffect(apiTranslate, 102, 202, 255, 102, 163, 255);
+        buttonHoverEffect(addNewWord, 102, 202, 255, 102, 163, 255);
+        buttonHoverEffect(aboutUs, 102, 202, 255, 102, 163, 255);
+        buttonHoverEffect(editButton, 102, 202, 255, 102, 163, 255);
+        buttonHoverEffect(deleteButton, 255, 63, 63, 255, 127, 127);
+        selectWordInList();
+    }
+
+    public void buttonHoverEffect(Button button, int r1, int g1, int b1, int r2, int g2, int b2) {
+        String backgroundColor1 = "-fx-background-color: rgb(" + Integer.toString(r1) +", " + Integer.toString(g1) + ", " + Integer.toString(b1) + ");";
+        String backgroundColor2 = "-fx-background-color: rgb(" + Integer.toString(r2) +", " + Integer.toString(g2) + ", " + Integer.toString(b2) + ");";
+        System.out.println(backgroundColor1);
+        button.hoverProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if(button.isHover()) button.setStyle(backgroundColor1);
+                else button.setStyle(backgroundColor2);
+            }
+        });
     }
 
     public void updateListView() {//van dang loi
         try {
-            String wordOnTyping;
-            if (wordSearch.getText() != null) {
-                wordOnTyping = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
-            } else {
-                listView.setPrefHeight(0);
-                return;
-            }
             if (listView.getItems().size() > 0) {
                 listView.getItems().subList(0, listView.getItems().size()).clear();
             }
-            listView.getItems().addAll(dictDB.dictionarySearcher(wordSearch.getText()));
+            if(wordSearch.getText() == null) {
+                listView.getItems().addAll(dictDB.dictionarySearcher(""));
+                listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
+                return;
+            }
+            listView.getItems().addAll(dictDB.dictionarySearcher(wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ")));
             listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
 
             /*
@@ -134,17 +158,19 @@ public class ControllerFindWord implements Initializable {
                 listView.setPrefHeight(0);
             }
             */
-            listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                    wordSearch.setText(listView.getSelectionModel().getSelectedItem());
-
-                    displayWordExplain();
-                }
-            });
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void selectWordInList() {
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                wordSearch.setText(listView.getSelectionModel().getSelectedItem());
+                displayWordExplain();
+            }
+        });
     }
 
     public void addWord() {
