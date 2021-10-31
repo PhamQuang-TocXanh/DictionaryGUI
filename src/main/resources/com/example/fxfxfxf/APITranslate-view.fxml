@@ -8,19 +8,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="354.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fxfxfxf.ControllerAPITranslate">
+<AnchorPane prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fxfxfxf.ControllerAPITranslate">
    <children>
-      <TextArea fx:id="dstText" editable="false" layoutX="316.0" layoutY="101.0" prefHeight="260.0" prefWidth="223.0" promptText="Translatation" wrapText="true">
+      <TextArea fx:id="dstText" editable="false" layoutX="383.0" layoutY="101.0" prefHeight="375.0" prefWidth="250.0" promptText="Translatation" wrapText="true">
          <font>
             <Font size="20.0" />
          </font></TextArea>
-      <Button fx:id="backBtn" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToFindWord" text="BACK" />
-      <Label fx:id="header" alignment="CENTER" contentDisplay="CENTER" layoutY="42.0" prefHeight="45.0" prefWidth="553.0" style="-fx-background-color: rgb(102, 163, 255);" text="Google API Translate" textFill="WHITE">
+      <Button fx:id="backBtn" layoutX="14.0" layoutY="3.0" mnemonicParsing="false" onAction="#switchToFindWord" prefHeight="30.0" prefWidth="62.0" style="-fx-background-color: #FF7F7F;" text="BACK" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <Label fx:id="header" alignment="CENTER" contentDisplay="CENTER" layoutY="42.0" prefHeight="47.0" prefWidth="640.0" style="-fx-background-color: rgb(102, 163, 255);" text="Google API Translate" textFill="WHITE">
          <font>
             <Font size="32.0" />
          </font>
       </Label>
-      <ImageView fitHeight="39.0" fitWidth="46.0" layoutX="486.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="39.0" fitWidth="46.0" layoutX="559.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/kinhlup_sach.png" />
          </image>
@@ -30,11 +33,17 @@
             <Image url="@image/dictionary_icon.png" />
          </image>
       </ImageView>
-      <TextArea fx:id="srcText" layoutX="8.0" layoutY="101.0" prefHeight="260.0" prefWidth="223.0" promptText="Enter text to translate" wrapText="true">
+      <TextArea fx:id="srcText" layoutX="8.0" layoutY="101.0" prefHeight="375.0" prefWidth="250.0" promptText="Enter text to translate" wrapText="true">
          <font>
             <Font size="20.0" />
          </font></TextArea>
-      <Button fx:id="enToVi" layoutX="243.0" layoutY="163.0" mnemonicParsing="false" onAction="#translateEnToVi" text="EnToVi" />
-      <Button fx:id="viToEn" layoutX="243.0" layoutY="228.0" mnemonicParsing="false" onAction="#translateViToEn" text="ViToEn" />
+      <Button fx:id="enToVi" layoutX="273.0" layoutY="191.0" mnemonicParsing="false" onAction="#translateEnToVi" style="-fx-background-color: #4da4f8;" text="ENG To VIET" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="viToEn" layoutX="273.0" layoutY="289.0" mnemonicParsing="false" onAction="#translateViToEn" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #4da4f8;" text="VIET To ENG" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

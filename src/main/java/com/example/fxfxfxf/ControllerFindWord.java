@@ -24,6 +24,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -48,7 +51,7 @@ public class ControllerFindWord implements Initializable {
     @FXML
     private Button aboutUs;
 
-    public static String wordNow;// may need to change
+    public static String wordNow;
 
 
     private Stage stage;
@@ -77,9 +80,9 @@ public class ControllerFindWord implements Initializable {
 
     public void displayWordExplain() {
         if (wordSearch.getText() == null) return;
-        String word_target = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
-        String word_explain = dictDB.findWord(word_target);
-        System.out.println(word_explain);
+        //String word_target = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
+        wordNow = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
+        String word_explain = dictDB.findWord(wordNow);
         meaning.setText((word_explain.equals("") ? "" : word_explain));
         meaning.setWrapText(true);
     }
@@ -95,6 +98,7 @@ public class ControllerFindWord implements Initializable {
             }
         });
         wordInlistView = new ArrayList<>();
+        wordNow = "";
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listView.getItems().addAll(dictDB.dictionarySearcher(""));
         listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
@@ -103,7 +107,7 @@ public class ControllerFindWord implements Initializable {
         buttonHoverEffect(aboutUs, 102, 202, 255, 102, 163, 255);
         buttonHoverEffect(editButton, 102, 202, 255, 102, 163, 255);
         buttonHoverEffect(deleteButton, 255, 63, 63, 255, 127, 127);
-        selectWordInList();
+        //selectWordInList();
     }
 
     public void buttonHoverEffect(Button button, int r1, int g1, int b1, int r2, int g2, int b2) {
@@ -119,8 +123,19 @@ public class ControllerFindWord implements Initializable {
         });
     }
 
-    public void updateListView() {//van dang loi
+    public void updateListView() {
         try {
+
+            if (wordSearch.getText() == null) {
+                wordNow = "";
+            } else {
+                wordNow = wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
+            }
+            listView.getItems().clear();
+            listView.getItems().addAll(dictDB.dictionarySearcher(wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ")));
+            listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
+
+            /*
             if (listView.getItems().size() > 0) {
                 listView.getItems().subList(0, listView.getItems().size()).clear();
             }
@@ -129,10 +144,6 @@ public class ControllerFindWord implements Initializable {
                 listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
                 return;
             }
-            listView.getItems().addAll(dictDB.dictionarySearcher(wordSearch.getText().trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ")));
-            listView.setPrefHeight(listView.getItems().size() * listView.getFixedCellSize());
-
-            /*
             wordInlistView.clear();
             int n = listWord.size();
 
@@ -164,15 +175,23 @@ public class ControllerFindWord implements Initializable {
     }
 
     public void selectWordInList() {
+        wordSearch.setText(listView.getSelectionModel().getSelectedItems().get(0));
+        displayWordExplain();
+        /*
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 wordSearch.setText(listView.getSelectionModel().getSelectedItem());
+                System.out.println("selectWordInList");
                 displayWordExplain();
             }
         });
+        */
     }
 
+    /**
+     * Add Word Button.
+     */
     public void addWord() {
 //        try {
 //            stage = new Stage();
@@ -359,36 +378,40 @@ public class ControllerFindWord implements Initializable {
     }
     */
 
+    /**
+     * Delete Button.
+     */
     public void deleteWord() {
-        if (!dictDB.isInDictionary(wordSearch.getText())) {
+        if (!dictDB.isInDictionary(wordNow)) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Word is not exist!");
             alert.setTitle("Error");
             alert.showAndWait();
             return;
         }
-
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Deleting word");
         alert.setHeaderText("Are you sure want to delete this word?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
-            dictDB.deleteWord(wordSearch.getText());
+            dictDB.deleteWord(wordNow);
             wordSearch.setText("");
             meaning.setText("");
         }
     }
 
-    public void editWord(ActionEvent e) { // need change (maybe)
-        System.out.println("edit");
-        if (!dictDB.isInDictionary(wordSearch.getText())) {
+    /**
+     * Edit Button
+     * @param e
+     */
+    public void editWord(ActionEvent e) {
+        if (!dictDB.isInDictionary(wordNow)) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Word is not exist!");
             alert.setTitle("Error");
             alert.showAndWait();
             return;
         }
-        wordNow = wordSearch.getText();
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("editWord.fxml")));
             view_scene = new Scene(root);
@@ -399,13 +422,42 @@ public class ControllerFindWord implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
             meaning.setText(dictDB.findWord(wordNow));
+            meaning.setWrapText(true);
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
     }
 
+    /**
+     * Text to speech.
+     */
     public void textToSpeech() {
-        TextToSpeech.textToSpeech(wordSearch.getText());
+        TextToSpeech.textToSpeech(wordNow);
     }
 
+    /**
+     * About Us Button.
+     */
+    public void showAboutUs() {
+        wordSearch.setText("");
+        updateListView();
+        try {
+            File dictionaryFile = new File(Main.class.getResource("aboutUs.txt").getPath());
+            FileReader fileReader = new FileReader(dictionaryFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringBuilder info = new StringBuilder();
+            String line;
+            while (true) {
+                line = bufferedReader.readLine();
+                if(line == null) break;
+                info.append(line + "\n");
+            }
+            bufferedReader.close();
+            fileReader.close();
+            meaning.setText(info.toString());
+            meaning.setWrapText(true);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

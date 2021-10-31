@@ -1,0 +1,11 @@
+﻿*Ứng dụng Từ điển Anh  - Việt
+Nhóm 25: 
+- Phạm Minh Quang - 20021413
+- Trần Minh Dương - 20021323
+Tính năng:
+- Dữ liệu từ điển phong phú với phát âm, giải thích, ví dụ, collocation...
+- Thêm, sửa, xóa từ
+- Phát âm tiếng anh
+- Dịch từ, đoạn văn với Google Translate
+- Giao diện thân thiện, dễ dùng
+

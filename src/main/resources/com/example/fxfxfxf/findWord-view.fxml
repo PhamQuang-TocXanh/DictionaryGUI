@@ -21,7 +21,7 @@
             <Image url="@image/find.gif" />
          </image>
       </ImageView>
-      <ListView fx:id="listView" fixedCellSize="30.0" layoutX="26.0" layoutY="116.0" maxHeight="373.0" minHeight="0.0" onMouseClicked="#selectWordInList" prefHeight="365.0" prefWidth="215.0" />
+      <ListView fx:id="listView" fixedCellSize="30.0" layoutX="26.0" layoutY="116.0" maxHeight="373.0" minHeight="0.0" onKeyPressed="#selectWordInList" onMouseClicked="#selectWordInList" prefHeight="365.0" prefWidth="215.0" />
       <Label layoutX="290.0" layoutY="52.0" text="Definition: ">
          <font>
             <Font size="34.0" />
@@ -55,7 +55,7 @@
          <font>
             <Font size="17.0" />
          </font></Button>
-      <Button fx:id="aboutUs" layoutX="272.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="132.0" style="-fx-background-color: rgb(102, 163, 255);" text="About us" textFill="WHITE">
+      <Button fx:id="aboutUs" layoutX="272.0" mnemonicParsing="false" onAction="#showAboutUs" prefHeight="39.0" prefWidth="132.0" style="-fx-background-color: rgb(102, 163, 255);" text="About us" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font></Button>
